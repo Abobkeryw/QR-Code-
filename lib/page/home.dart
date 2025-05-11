@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:qr_app/page/forgot_password_page.dart';
 import 'package:qr_app/page/qr_code.dart';
+import 'package:qr_app/page/register_page.dart';
 
 
 
@@ -105,89 +107,134 @@ void handleSubmit(BuildContext context) async {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFCCE5FF), // Light blue background
-      body: Center(
-        child: SingleChildScrollView(
-          child: Container(
-            padding: const EdgeInsets.all(24.0),
-            margin: const EdgeInsets.symmetric(horizontal: 30.0),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(16.0),
-              boxShadow: const [
-                BoxShadow(
-                  color: Colors.black12,
-                  blurRadius: 10,
-                  offset: Offset(0, 6),
-                ),
-              ],
+  backgroundColor: const Color(0xFFCCE5FF), // Light blue background
+  body: Center(
+    child: SingleChildScrollView(
+      child: Container(
+        padding: const EdgeInsets.all(24.0),
+        margin: const EdgeInsets.symmetric(horizontal: 30.0),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(16.0),
+          boxShadow: const [
+            BoxShadow(
+              color: Colors.black12,
+              blurRadius: 10,
+              offset: Offset(0, 6),
             ),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
+          ],
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Text(
+              'Login',
+              style: TextStyle(
+                fontSize: 28,
+                fontWeight: FontWeight.bold,
+                color: Colors.blueAccent,
+              ),
+            ),
+            const SizedBox(height: 30),
+            TextField(
+              controller: emailController,
+              decoration: InputDecoration(
+                prefixIcon: const Icon(Icons.email),
+                hintText: "Enter your Gmail",
+                filled: true,
+                fillColor: const Color(0xFFF5F7FA),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12.0),
+                  borderSide: BorderSide.none,
+                ),
+              ),
+              keyboardType: TextInputType.emailAddress,
+            ),
+            const SizedBox(height: 20),
+            TextField(
+              controller: passwordController,
+              obscureText: true,
+              decoration: InputDecoration(
+                prefixIcon: const Icon(Icons.lock),
+                hintText: "Enter your password",
+                filled: true,
+                fillColor: const Color(0xFFF5F7FA),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12.0),
+                  borderSide: BorderSide.none,
+                ),
+              ),
+            ),
+            const SizedBox(height: 10),
+
+            // Forgot Password
+            Align(
+              alignment: Alignment.centerRight,
+              child: TextButton(
+                onPressed: () {
+                    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (_) => ForgotPasswordPage()),
+    );
+                },
+                child: const Text(
+                  "Forgot Password?",
+                  style: TextStyle(color: Colors.deepPurple),
+                ),
+              ),
+            ),
+
+            const SizedBox(height: 10),
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: () => handleSubmit(context),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.deepPurpleAccent,
+                  padding: const EdgeInsets.symmetric(vertical: 14),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  shadowColor: Colors.deepPurple.withOpacity(0.3),
+                  elevation: 8,
+                ),
+                child: const Text(
+                  'Submit',
+                  style: TextStyle(fontSize: 16, color: Colors.white),
+                ),
+              ),
+            ),
+
+            const SizedBox(height: 16),
+
+            // Create Account
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text(
-                  'Login',
-                  style: TextStyle(
-                    fontSize: 28,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.blueAccent,
-                  ),
-                ),
-                const SizedBox(height: 30),
-                TextField(
-                  controller: emailController,
-                  decoration: InputDecoration(
-                    prefixIcon: const Icon(Icons.email),
-                    hintText: "Enter your Gmail",
-                    filled: true,
-                    fillColor: const Color(0xFFF5F7FA),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12.0),
-                      borderSide: BorderSide.none,
-                    ),
-                  ),
-                  keyboardType: TextInputType.emailAddress,
-                ),
-                const SizedBox(height: 20),
-                TextField(
-                  controller: passwordController,
-                  obscureText: true,
-                  decoration: InputDecoration(
-                    prefixIcon: const Icon(Icons.lock),
-                    hintText: "Enter your password",
-                    filled: true,
-                    fillColor: const Color(0xFFF5F7FA),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12.0),
-                      borderSide: BorderSide.none,
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 30),
-                SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: () => handleSubmit(context),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.deepPurpleAccent,
-                      padding: const EdgeInsets.symmetric(vertical: 14),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      shadowColor: Colors.deepPurple.withOpacity(0.3),
-                      elevation: 8,
-                    ),
-                    child: const Text(
-                      'Submit',
-                      style: TextStyle(fontSize: 16 , color: Colors.white),
+                const Text("Don't have an account? "),
+                GestureDetector(
+                  onTap: () {
+                     Navigator.push(
+      context,
+      MaterialPageRoute(builder: (_) => RegisterPage()),
+    );
+                  },
+                  child: const Text(
+                    "Create Account",
+                    style: TextStyle(
+                      color: Colors.deepPurple,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),
               ],
             ),
-          ),
+          ],
         ),
       ),
-    );
+    ),
+  ),
+);
+
   }
 }
