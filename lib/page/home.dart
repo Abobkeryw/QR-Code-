@@ -22,25 +22,61 @@ void handleSubmit(BuildContext context) async {
     );
 
     // ✅ If login succeeds, show dialog
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Login Successful'),
-        content: const Text('You have successfully logged in.'),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.pop(context); // Close dialog
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(builder: (context) => const QrCode()),
-              );
-            },
-            child: const Text('OK'),
+  showDialog(
+  context: context,
+  builder: (context) => AlertDialog(
+    backgroundColor: Colors.white,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(20),
+    ),
+    title: Row(
+      children: const [
+        Icon(Icons.check_circle, color: Colors.green, size: 28),
+        SizedBox(width: 10),
+        Text(
+          'Success!',
+          style: TextStyle(
+            color: Colors.green,
+            fontWeight: FontWeight.bold,
+            fontSize: 20,
           ),
-        ],
+        ),
+      ],
+    ),
+    content: const Text(
+      'You have successfully logged in.',
+      style: TextStyle(fontSize: 16),
+    ),
+    actions: [
+      Center(
+        child: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.green,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+          ),
+          onPressed: () {
+            Navigator.pop(context); // Close dialog
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => const QrCode()),
+            );
+          },
+          child: const Text(
+            'Continue',
+            style: TextStyle(
+              fontSize: 16,
+              color: Colors.white,
+            ),
+          ),
+        ),
       ),
-    );
+    ],
+  ),
+);
+
   } on FirebaseAuthException catch (e) {
     if (e.code == 'user-not-found') {
       print('No user found for that email.');
